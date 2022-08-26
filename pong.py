@@ -29,6 +29,92 @@ paddle_b.penup()
 paddle_b.goto(350, 0)
 
 
+#Ball
+ball = turtle.Turtle()
+ball.speed(0)
+ball.shape("square")
+ball.color("white")
+ball.penup()
+ball.goto(0, 0)
+ball.dx = 2
+ball.dy = 2
+
+
+
+#Function
+def paddle_a_up():
+    y = paddle_a.ycor()
+    y += 20
+    paddle_a.sety(y)
+
+def paddle_a_down():
+    y = paddle_a.ycor()
+    y -= 20
+    paddle_a.sety(y)
+
+def paddle_b_up():
+    y = paddle_b.ycor()
+    y += 20
+    paddle_b.sety(y)
+
+def paddle_b_down():
+    y = paddle_b.ycor()
+    y -= 20
+    paddle_b.sety(y)
+
+
+#Keyboard Binding
+wn.listen()
+wn.onkeypress(paddle_a_up, "w")
+wn.onkeypress(paddle_a_down, "s")
+wn.onkeypress(paddle_b_up, "Up")
+wn.onkeypress(paddle_b_down, "Down")
+
+
+#Main Game Loop
+while True:
+
+    wn.update()
+    #Move the ball
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    #Border Checking
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball.dy *= -1
+        ball.dx *= -1
+        ball.dx += 0.5
+        ball.dy += 0.5
+
+    if ball.ycor() < -290:
+        ball.sety(-290)
+        ball.dy *= -1
+        ball.dx *= -1
+        ball.dx += 0.5
+        ball.dy += 0.5
+
+    if ball.xcor() > 390:
+        ball.goto(0, 0)
+        ball.dx *= -1
+        ball.dy *= -1
+        ball.dx += 0.5
+        ball.dy += 0.5
+        score_a += 1
+        pen.clear()
+        pen.write("Player A: {} Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+
+    if ball.xcor() < -390:
+        ball.goto(0, 0)
+        ball.dx *= -1
+        ball.dy *= -1
+        ball.dx += 0.5
+        ball.dy += 0.5
+        score_b += 1
+        pen.clear()
+        pen.write("Player A: {} Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+
+
 
 #Main Game loop
 while True:
